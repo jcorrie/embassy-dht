@@ -10,7 +10,7 @@
 //!
 
 use embassy_rp::gpio::{Flex, Pin};
-use embassy_rp::Peripheral;
+use embassy_rp::Peri;
 use embedded_hal::delay::DelayNs;
 
 use crate::wait_for_state;
@@ -25,8 +25,8 @@ impl<'a, D> DHT22<'a, D>
 where
     D: DelayNs,
 {
-    pub fn new(pin: impl Peripheral<P = impl Pin> + 'a, delay: D) -> Self {
-        let pin = Flex::new(pin);
+    pub fn new(pin: Peri<'a, impl Pin>, delay: D) -> Self {
+        let pin = Flex::new(Peri::from(pin));
         Self { pin, delay }
     }
 
